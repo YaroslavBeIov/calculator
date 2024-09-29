@@ -5,13 +5,14 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.shape.RoundedCornerShape // Добавлено
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.platform.LocalConfiguration
 import com.example.calculator.ui.theme.CalculatorTheme
 
 class MainActivity : ComponentActivity() {
@@ -33,6 +34,9 @@ fun MainContent(modifier: Modifier = Modifier) {
     var number1 by remember { mutableStateOf("") }
     var number2 by remember { mutableStateOf("") }
     var result by remember { mutableStateOf("") }
+
+    val configuration = LocalConfiguration.current
+    val isPortrait = configuration.orientation == android.content.res.Configuration.ORIENTATION_PORTRAIT
 
     Column(
         modifier = modifier.fillMaxSize(),
@@ -92,7 +96,7 @@ fun MainContent(modifier: Modifier = Modifier) {
             ) {
                 Column(
                     modifier = Modifier
-                        .fillMaxWidth(0.3f) // Используйте вес для равномерного распределения
+                        .fillMaxWidth(if (isPortrait) 0.3f else 0.45f) // Изменяем ширину в зависимости от ориентации
                         .height(161.dp)
                         .padding(8.dp)
                 ) {
